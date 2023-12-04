@@ -1,12 +1,12 @@
 package com.livrariamabuko.Livraria.Mabuko.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +24,7 @@ import com.livrariamabuko.Livraria.Mabuko.repository.AuthorRepository;
 
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("api/v1")
@@ -33,23 +34,25 @@ public class AuthorController {
     private AuthorRepository authorRepository;
 
     @GetMapping("/authors")
-    public List<Author> getAllAuthors(){
+    public List<Author> getAllAuthors() {
         List<Author> authors = authorRepository.findAll();
-        if(authors.isEmpty()){
-             throw new EmptyDatabaseException("No authors found in the database.");
+        if (authors.isEmpty()) {
+            throw new EmptyDatabaseException("No authors found in the database.");
         }
-            
+
         return authors;
     }
 
-    @GetMapping("/authors/{id}")
-    public ResponseEntity<Author> getAuthorById(@PathVariable(value = "id")long id) throws ResourceNotFoundException{
-        Author author = authorRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Author with ID:: "+ id+ " not found"));
+    @GetMapping("/author/{id}")
+    public ResponseEntity<Author> getAuthorById(@PathVariable(value = "id") long id) throws ResourceNotFoundException {
+        Author author = authorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Author with ID:: " + id + " not found"));
         return ResponseEntity.ok().body(author);
     }
 
-    @GetMapping("/authors/{name}")
-    public ResponseEntity<List<Author>> getAuthorByName(@PathVariable(value = "name") String name) throws ResourceNotFoundException {
+    @GetMapping("/authors/byName/{name}")
+    public ResponseEntity<List<Author>> getAuthorByName(@PathVariable(value = "name") String name)
+            throws ResourceNotFoundException {
         List<Author> authors = authorRepository.findByName(name);
 
         if (authors.isEmpty()) {
@@ -60,7 +63,7 @@ public class AuthorController {
     }
 
     @PostMapping("/author")
-    public ResponseEntity addNewAuthor(@Valid @RequestBody AuthorDTO authorDTO){
+    public ResponseEntity addNewAuthor(@Valid @RequestBody AuthorDTO authorDTO) {
         Author author = new Author();
 
         BeanUtils.copyProperties(authorDTO, author);
@@ -68,9 +71,25 @@ public class AuthorController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(saveAuthor);
     }
-    
-   
 
-    
-   
+    @PutMapping("author/{id}")
+    public ResponseEntity<Object> updateAuthor(@PathVariable(value = "id") long id,
+            @Valid @RequestBody AuthorDTO authorDTO) throws ResourceNotFoundException {
+        Author foundedAuthor = authorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Author with ID:: " + id + " not found"));
+                foundedAuthor.setName(authorDTO.name());
+                foundedAuthor.setNationairy(authorDTO.nationairy());
+                foundedAuthor.setBibliography(authorDTO.bibliography());
+                final Author updateAuthor = authorRepository.save(foundedAuthor);
+        return ResponseEntity.ok().body(updateAuthor);
+    }
+
+    @DeleteMapping("/author/{id}")
+    public ResponseEntity<Object> deleteAuthorEntity(@Valid @PathVariable(value = "id") long id) throws ResourceNotFoundException{
+        Author foundedAuthor = authorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Author with ID:: " + id + " not found"));
+                authorRepository.delete(foundedAuthor);
+                return ResponseEntity.status(HttpStatus.OK).body("author deleted succesfully");      
+    }
+
 }

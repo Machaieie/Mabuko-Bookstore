@@ -20,7 +20,7 @@ public class Publisher implements Serializable {
     private long id;
     private String name;
     private String location;
-    private long phone;
+    private String phone;
 
     @OneToMany(mappedBy = "publisher")
     private List<Book> books;
@@ -49,12 +49,12 @@ public class Publisher implements Serializable {
         this.location = location;
     }
 
-    public long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(long phone) {
-        this.phone = phone;
+    public void setPhone(String string) {
+        this.phone = string;
     }
 
     public List<Book> getBooks() {

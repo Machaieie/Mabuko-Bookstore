@@ -1,4 +1,4 @@
-package com.livrariamabuko.Livraria.Mabuko.exceptions;
+package com.livrariamabuko.Livraria.Mabuko.controller;
 
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
@@ -6,6 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.livrariamabuko.Livraria.Mabuko.exceptions.EmptyDatabaseException;
+import com.livrariamabuko.Livraria.Mabuko.exceptions.ErrorResponse;
+import com.livrariamabuko.Livraria.Mabuko.exceptions.ResourceNotFoundException;
+import com.livrariamabuko.Livraria.Mabuko.exceptions.ResponseError;
+
 import java.time.LocalDateTime;
 
 
@@ -17,7 +23,7 @@ public class GlobalExceptionHandler {
         HttpStatus status = HttpStatus.NOT_FOUND;
         ErrorResponse errorResponse = new ErrorResponse(
                 status.value(),
-                "Recurso não encontrado",
+                "Resource not found",
                 ex.getMessage(),
                 LocalDateTime.now()
         );
@@ -29,7 +35,7 @@ public class GlobalExceptionHandler {
         HttpStatus status = HttpStatus.UNAUTHORIZED;
         ErrorResponse errorResponse = new ErrorResponse(
                 status.value(),
-                "Falha na autenticação",
+                "Authentication failed",
                 ex.getMessage(),
                 LocalDateTime.now()
         );
@@ -42,7 +48,7 @@ public class GlobalExceptionHandler {
 
         ErrorResponse errorResponse = new ErrorResponse(
                 status.value(),
-                "Erro de validação",
+                "Validation error",
                 ex.getMessage(),
                 LocalDateTime.now()
         );
