@@ -1,0 +1,76 @@
+package com.livrariamabuko.Livraria.Mabuko.controller;
+
+
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.livrariamabuko.Livraria.Mabuko.DTOs.AuthorDTO;
+import com.livrariamabuko.Livraria.Mabuko.exceptions.EmptyDatabaseException;
+import com.livrariamabuko.Livraria.Mabuko.exceptions.ErrorResponse;
+import com.livrariamabuko.Livraria.Mabuko.exceptions.ResourceNotFoundException;
+import com.livrariamabuko.Livraria.Mabuko.model.Author;
+import com.livrariamabuko.Livraria.Mabuko.repository.AuthorRepository;
+
+import ch.qos.logback.core.joran.util.beans.BeanUtil;
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("api/v1")
+public class AuthorController {
+
+    @Autowired
+    private AuthorRepository authorRepository;
+
+    @GetMapping("/authors")
+    public List<Author> getAllAuthors(){
+        List<Author> authors = authorRepository.findAll();
+        if(authors.isEmpty()){
+             throw new EmptyDatabaseException("No authors found in the database.");
+        }
+            
+        return authors;
+    }
+
+    @GetMapping("/authors/{id}")
+    public ResponseEntity<Author> getAuthorById(@PathVariable(value = "id")long id) throws ResourceNotFoundException{
+        Author author = authorRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Author with ID:: "+ id+ " not found"));
+        return ResponseEntity.ok().body(author);
+    }
+
+    @GetMapping("/authors/{name}")
+    public ResponseEntity<List<Author>> getAuthorByName(@PathVariable(value = "name") String name) throws ResourceNotFoundException {
+        List<Author> authors = authorRepository.findByName(name);
+
+        if (authors.isEmpty()) {
+            throw new ResourceNotFoundException("No authors found with the name: " + name);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(authors);
+    }
+
+    @PostMapping("/author")
+    public ResponseEntity addNewAuthor(@Valid @RequestBody AuthorDTO authorDTO){
+        Author author = new Author();
+
+        BeanUtils.copyProperties(authorDTO, author);
+        Author saveAuthor = authorRepository.save(author);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(saveAuthor);
+    }
+    
+   
+
+    
+   
+}
