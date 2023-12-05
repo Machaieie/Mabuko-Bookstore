@@ -1,6 +1,7 @@
 package com.livrariamabuko.Livraria.Mabuko.exceptions;
 import java.time.LocalDateTime;
 public class ErrorResponse {
+    private static final long serialVersionUID = 1L;
     private int status;
         private String error;
         private String message;

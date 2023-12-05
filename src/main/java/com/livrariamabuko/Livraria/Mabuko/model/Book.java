@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,34 +18,33 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Books")
 public class Book implements Serializable {
-    private static final long serialVersion = 1L;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String title;
 
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date publisherDate;
+    
+    private String publisherDate;
 
     private int edition;
     private String gender;
-    private boolean availability;
+    
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
+    @JsonBackReference
     private Author author;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
-
 
     public long getId() {
         return id;
@@ -61,11 +62,11 @@ public class Book implements Serializable {
         this.title = title;
     }
 
-    public Date getPublisherDate() {
+    public String getPublisherDate() {
         return publisherDate;
     }
 
-    public void setPublisherDate(Date publisherDate) {
+    public void setPublisherDate(String publisherDate) {
         this.publisherDate = publisherDate;
     }
 
@@ -101,15 +102,6 @@ public class Book implements Serializable {
         this.publisher = publisher;
     }
 
-    public boolean isAvailability() {
-        return availability;
-    }
+   
 
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
-    }
-
-    
-
-    
 }

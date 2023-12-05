@@ -11,8 +11,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Client")
 public class Client implements Serializable{
-    private static final long serialVersion = 1L;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

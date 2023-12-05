@@ -4,26 +4,29 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
 
-import java.util.Date;
+import java.util.*;
 
 public record BookDTO(
         @NotBlank(message = "Title is required")
         String title,
 
-        @NotNull(message = "Publisher date is required")
-        @JsonFormat(pattern = "yyyy-MM-dd")
-        Date publisherDate,
+        @NotBlank
+        String publisherDate,
+        
+        @NotNull
+        int edition,
 
         @NotBlank(message = "Gender is required")
         String gender,
 
-        @NotNull(message = "Availability is required")
-        boolean availability,
 
-        @NotBlank(message = "Author is required")
-        String author,
+       
 
-        @NotBlank(message = "Publisher is required")
-        String publisher) {
+        @NotNull(message = "Author is required")
+        long author_id,
+
+        @NotNull(message = "Publisher is required")
+        long publisher_id) {
 }

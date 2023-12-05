@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,8 +14,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Publisher")
 public class Publisher implements Serializable {
-    private static final long serialVersion = 1L;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -22,7 +22,7 @@ public class Publisher implements Serializable {
     private String location;
     private String phone;
 
-    @OneToMany(mappedBy = "publisher")
+    @OneToMany(mappedBy = "publisher",fetch = FetchType.LAZY)
     private List<Book> books;
 
     public long getId() {

@@ -1,6 +1,7 @@
 package com.livrariamabuko.Livraria.Mabuko.exceptions;
 
 public class ResponseError {
+    private static final long serialVersionUID = 1L;
     private int status;
         private String message;
 
