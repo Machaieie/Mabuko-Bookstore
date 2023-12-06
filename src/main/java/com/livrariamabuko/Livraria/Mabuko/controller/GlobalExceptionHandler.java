@@ -1,6 +1,7 @@
 package com.livrariamabuko.Livraria.Mabuko.controller;
 
 import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -60,5 +61,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ResponseError> handleEmptyDatabaseException(EmptyDatabaseException ex) {
         ResponseError errorResponse = new ResponseError(HttpStatus.NOT_FOUND.value(), ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(IncorrectResultSizeDataAccessException.class)
+    public ResponseEntity<ErrorResponse> handleIncorrectResultSizeDataAccessException(IncorrectResultSizeDataAccessException ex) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                status.value(),
+                "Internal Server Error",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponse, status);
     }
 }

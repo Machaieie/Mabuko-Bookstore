@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.livrariamabuko.Livraria.Mabuko.DTOs.BookDTO;
+import com.livrariamabuko.Livraria.Mabuko.exceptions.DuplicatedEntityException;
 import com.livrariamabuko.Livraria.Mabuko.exceptions.EmptyDatabaseException;
 import com.livrariamabuko.Livraria.Mabuko.exceptions.ResourceNotFoundException;
 import com.livrariamabuko.Livraria.Mabuko.model.Author;
@@ -67,8 +68,12 @@ public class BookController {
         Publisher publisher = publisherRepository.findById(bookDTO.publisher_id()).orElseThrow(
                 () -> new ResourceNotFoundException("Publisher with ID:: " + bookDTO.publisher_id() + " not found"));
 
+       if(livroExiste(bookDTO.title(), bookDTO.gender(), bookDTO.edition())){
+        new DuplicatedEntityException("Livro existente");
+       }
+           
         Book saveBook = new Book();
-        
+
         saveBook.setAuthor(author);
         saveBook.setPublisher(publisher);
         BeanUtils.copyProperties(bookDTO, saveBook);
@@ -76,6 +81,11 @@ public class BookController {
         Book book = bookRepository.save(saveBook);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    public boolean livroExiste(String titulo, String genero, int edicao) {
+        Optional<Book> livroExistente = bookRepository.findByTitleAndGenderAndEdition(titulo, genero, edicao);
+        return livroExistente.isPresent();
     }
 
 }
