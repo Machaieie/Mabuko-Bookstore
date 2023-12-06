@@ -68,13 +68,14 @@ public class BookController {
                 () -> new ResourceNotFoundException("Publisher with ID:: " + bookDTO.publisher_id() + " not found"));
 
         Book saveBook = new Book();
+        
         saveBook.setAuthor(author);
         saveBook.setPublisher(publisher);
         BeanUtils.copyProperties(bookDTO, saveBook);
 
         Book book = bookRepository.save(saveBook);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(book);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }

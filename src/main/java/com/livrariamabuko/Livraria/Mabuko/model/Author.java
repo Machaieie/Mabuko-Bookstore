@@ -3,6 +3,8 @@ package com.livrariamabuko.Livraria.Mabuko.model;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -19,6 +21,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Author")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Author implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -30,6 +33,7 @@ public class Author implements Serializable {
 
     @OneToMany(mappedBy = "author",fetch = FetchType.LAZY)
     @JsonManagedReference
+    @JsonIgnore
     private List<Book> books;
 
     public long getId() {

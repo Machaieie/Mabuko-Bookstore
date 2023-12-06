@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 import java.util.*;
 
-public record BookDTO(
+public record BookDTO   (
         @NotBlank(message = "Title is required")
         String title,
 

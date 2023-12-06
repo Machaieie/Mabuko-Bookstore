@@ -69,7 +69,7 @@ public class AuthorController {
         BeanUtils.copyProperties(authorDTO, author);
         Author saveAuthor = authorRepository.save(author);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(saveAuthor);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("author/{id}")
