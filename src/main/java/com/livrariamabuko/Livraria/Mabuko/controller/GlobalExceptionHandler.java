@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 
+import com.livrariamabuko.Livraria.Mabuko.exceptions.DuplicatedEntityException;
 import com.livrariamabuko.Livraria.Mabuko.exceptions.EmptyDatabaseException;
 import com.livrariamabuko.Livraria.Mabuko.exceptions.ErrorResponse;
 import com.livrariamabuko.Livraria.Mabuko.exceptions.ResourceNotFoundException;
@@ -22,6 +24,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResourceNotFoundException ex) {
         HttpStatus status = HttpStatus.NOT_FOUND;
+    
         ErrorResponse errorResponse = new ErrorResponse(
                 status.value(),
                 "Resource not found",
@@ -74,5 +77,17 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
         return new ResponseEntity<>(errorResponse, status);
+    }
+
+    @ExceptionHandler(DuplicatedEntityException.class)
+    public ResponseEntity<Object> handleDuplicatedEntityException(DuplicatedEntityException ex, WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setTimestamp(LocalDateTime.now());
+        errorResponse.setStatus(HttpStatus.CONFLICT.value());
+        errorResponse.setError(HttpStatus.CONFLICT.getReasonPhrase());
+        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setPath(ex.getPath());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 }

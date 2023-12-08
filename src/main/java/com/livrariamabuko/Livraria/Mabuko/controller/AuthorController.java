@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,12 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.livrariamabuko.Livraria.Mabuko.DTOs.AuthorDTO;
 import com.livrariamabuko.Livraria.Mabuko.exceptions.EmptyDatabaseException;
-import com.livrariamabuko.Livraria.Mabuko.exceptions.ErrorResponse;
 import com.livrariamabuko.Livraria.Mabuko.exceptions.ResourceNotFoundException;
 import com.livrariamabuko.Livraria.Mabuko.model.Author;
 import com.livrariamabuko.Livraria.Mabuko.repository.AuthorRepository;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -77,19 +74,20 @@ public class AuthorController {
             @Valid @RequestBody AuthorDTO authorDTO) throws ResourceNotFoundException {
         Author foundedAuthor = authorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Author with ID:: " + id + " not found"));
-                foundedAuthor.setName(authorDTO.name());
-                foundedAuthor.setNationairy(authorDTO.nationairy());
-                foundedAuthor.setBibliography(authorDTO.bibliography());
-                final Author updateAuthor = authorRepository.save(foundedAuthor);
+        foundedAuthor.setName(authorDTO.name());
+        foundedAuthor.setNationairy(authorDTO.nationairy());
+        foundedAuthor.setBibliography(authorDTO.bibliography());
+        final Author updateAuthor = authorRepository.save(foundedAuthor);
         return ResponseEntity.ok().body(updateAuthor);
     }
 
     @DeleteMapping("/author/{id}")
-    public ResponseEntity<Object> deleteAuthorEntity(@Valid @PathVariable(value = "id") long id) throws ResourceNotFoundException{
+    public ResponseEntity<Object> deleteAuthorEntity(@Valid @PathVariable(value = "id") long id)
+            throws ResourceNotFoundException {
         Author foundedAuthor = authorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Author with ID:: " + id + " not found"));
-                authorRepository.delete(foundedAuthor);
-                return ResponseEntity.status(HttpStatus.OK).body("author deleted succesfully");      
+        authorRepository.delete(foundedAuthor);
+        return ResponseEntity.status(HttpStatus.OK).body("author deleted succesfully");
     }
 
 }
