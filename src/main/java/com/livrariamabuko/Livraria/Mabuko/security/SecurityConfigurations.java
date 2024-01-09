@@ -23,7 +23,7 @@ public class SecurityConfigurations {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize->authorize
                         .requestMatchers(HttpMethod.POST, "auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "auth/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "auth/signup").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/v1/addBook").hasRole("ADMIN")
                         .anyRequest().authenticated())
                         .build();

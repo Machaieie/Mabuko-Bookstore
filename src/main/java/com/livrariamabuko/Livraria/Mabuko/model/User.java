@@ -59,11 +59,18 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
     }
+    
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<UserRole> roles = new HashSet<>();
     
     
+    @Transient
+    public void addRole(Role role) {
+        UserRole userRole = new UserRole(role);
+        userRole.setUser(this);
+        this.roles.add(userRole);
+    }
 
     public User() {
     }

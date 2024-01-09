@@ -20,7 +20,10 @@ import com.livrariamabuko.Livraria.Mabuko.model.User;
 import com.livrariamabuko.Livraria.Mabuko.model.UserRole;
 import com.livrariamabuko.Livraria.Mabuko.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
@@ -48,7 +51,7 @@ public class UserService implements UserDetailsService {
         user.setUsername(request.username());
         user.setName(request.name());
         user.setPassword(passwordEncoder.encode(request.password()));
-        user.setEnabled(!request.mobileUser());
+        user.setEnabled(true);
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
         user.setCredentialsNonExpired(true);
