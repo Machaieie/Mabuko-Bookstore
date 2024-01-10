@@ -4,7 +4,6 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
-import jakarta.persistence.FetchType;
 
 
 @Entity
@@ -13,7 +12,7 @@ import jakarta.persistence.FetchType;
 public class Book implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String title;
@@ -23,6 +22,8 @@ public class Book implements Serializable {
 
     private int edition;
     private String gender;
+
+    private double price;
     
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -89,6 +90,15 @@ public class Book implements Serializable {
         this.publisher = publisher;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    
    
 
 }
