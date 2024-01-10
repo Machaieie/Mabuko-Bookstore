@@ -7,7 +7,7 @@ import com.livrariamabuko.Livraria.Mabuko.exceptions.DuplicatedEntityException;
 import com.livrariamabuko.Livraria.Mabuko.exceptions.ResourceNotFoundException;
 import com.livrariamabuko.Livraria.Mabuko.model.User;
 import com.livrariamabuko.Livraria.Mabuko.repository.UserRepository;
-//import com.livrariamabuko.Livraria.Mabuko.security.TokenService;
+import com.livrariamabuko.Livraria.Mabuko.security.TokenService;
 import com.livrariamabuko.Livraria.Mabuko.service.UserService;
 
 import jakarta.validation.Valid;
@@ -40,8 +40,8 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-   
-    //private TokenService tokenService;
+   @Autowired
+    private TokenService tokenService;
   
     @PostMapping("/login")
 public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO authenticationDTO) {
@@ -57,7 +57,9 @@ public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO authenticat
         responseBody.put("username", userDetails.getUsername());
         responseBody.put("roles", userDetails.getAuthorities());
 
-        return ResponseEntity.ok(responseBody);
+        var token = tokenService.generateToken((User) auth.getPrincipal());
+
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     } catch (BadCredentialsException e) {
         // Captura a exceção de credenciais inválidas
         throw new ResourceNotFoundException("Utilizador ou Senha incorrecta, tente novamente !");
