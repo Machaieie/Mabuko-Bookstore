@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.livrariamabuko.Livraria.Mabuko.DTOs.AuthenticationDTO;
 import com.livrariamabuko.Livraria.Mabuko.DTOs.SignUpDTO;
 import com.livrariamabuko.Livraria.Mabuko.model.User;
 import com.livrariamabuko.Livraria.Mabuko.model.UserRole;
@@ -62,5 +63,7 @@ public class UserService implements UserDetailsService {
         return user;
 
     }
+
+    
 
 }

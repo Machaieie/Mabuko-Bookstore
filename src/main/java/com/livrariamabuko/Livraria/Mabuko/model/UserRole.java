@@ -30,6 +30,12 @@ public class UserRole implements Serializable{
     @Enumerated(EnumType.STRING)
 	private Role role;
 
+
+
+    
+    public UserRole() {
+    }
+
     public long getId() {
         return id;
     }
