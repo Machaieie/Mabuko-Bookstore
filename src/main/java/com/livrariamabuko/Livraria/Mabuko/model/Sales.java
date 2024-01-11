@@ -1,7 +1,8 @@
 package com.livrariamabuko.Livraria.Mabuko.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,9 +25,11 @@ public class Sales implements Serializable{
     private Book book;
 
     private int amount;
+    
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date saleDate;
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+    private ZonedDateTime saleDate;
+    
 
     private double total;
 
@@ -54,11 +57,11 @@ public class Sales implements Serializable{
         this.amount = amount;
     }
 
-    public Date getSaleDate() {
+    public ZonedDateTime getSaleDate() {
         return saleDate;
     }
 
-    public void setSaleDate(Date saleDate) {
+    public void setSaleDate(ZonedDateTime saleDate) {
         this.saleDate = saleDate;
     }
 
