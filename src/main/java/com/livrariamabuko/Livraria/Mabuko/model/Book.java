@@ -34,6 +34,9 @@ public class Book implements Serializable {
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
+    @OneToOne(mappedBy = "book",fetch = FetchType.LAZY)
+    private StockBook estoque;
+
     public long getId() {
         return id;
     }

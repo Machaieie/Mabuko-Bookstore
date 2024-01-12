@@ -16,8 +16,9 @@ public class StockBook implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idBook", nullable = false)
+    
+    @OneToOne
+    @JoinColumn(name = "book_id")
     private Book book;
 
     private double amount;

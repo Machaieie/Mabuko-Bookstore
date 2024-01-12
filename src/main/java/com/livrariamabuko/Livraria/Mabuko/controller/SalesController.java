@@ -18,12 +18,14 @@ import com.livrariamabuko.Livraria.Mabuko.DTOs.SaleDTO;
 import com.livrariamabuko.Livraria.Mabuko.exceptions.DuplicatedEntityException;
 import com.livrariamabuko.Livraria.Mabuko.exceptions.EmptyDatabaseException;
 import com.livrariamabuko.Livraria.Mabuko.exceptions.ResourceNotFoundException;
+import com.livrariamabuko.Livraria.Mabuko.exceptions.UnavailableQuantityException;
 import com.livrariamabuko.Livraria.Mabuko.model.Author;
 import com.livrariamabuko.Livraria.Mabuko.model.Book;
 import com.livrariamabuko.Livraria.Mabuko.model.Publisher;
 import com.livrariamabuko.Livraria.Mabuko.model.Sales;
 import com.livrariamabuko.Livraria.Mabuko.repository.BookRepository;
 import com.livrariamabuko.Livraria.Mabuko.repository.SaleRepository;
+import com.livrariamabuko.Livraria.Mabuko.service.SaleService;
 
 import jakarta.validation.Valid;
 
@@ -38,7 +40,7 @@ public class SalesController {
     private SaleRepository saleRepository;
 
     @Autowired
-    private BookRepository bookRepository;
+    private SaleService salesService;
 
     @GetMapping("/sales")
     public List<Sales> getAllSales(){
@@ -55,17 +57,15 @@ public class SalesController {
         return ResponseEntity.ok().body(sale);
     }
 
-    @PostMapping("/addSale")
-    public ResponseEntity addNewBook(@Valid @RequestBody SaleDTO saleDTO) throws ResourceNotFoundException {
-    
-       
-    
-        
-    
-    
-        
-    
-        return ResponseEntity.status(HttpStatus.CREATED).body("Book successfully registered!");
+    @PostMapping("addSale")
+    public ResponseEntity<List<Sales>> makeSales(@Valid @RequestBody List<SaleDTO> saleDTOList) {
+        try {
+            List<Sales> salesList = salesService.makeSales(saleDTOList);
+            return ResponseEntity.status(HttpStatus.CREATED).body(salesList);
+        } catch (UnavailableQuantityException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            // ou lance uma exceção apropriada e a deixe ser manipulada globalmente
+        }
     }
 
 }
