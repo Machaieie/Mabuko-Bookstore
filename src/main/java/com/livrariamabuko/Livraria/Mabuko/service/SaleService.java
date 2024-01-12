@@ -38,7 +38,7 @@ public class SaleService {
             Book book = bookRepository.findById(saleDTO.book_id()).orElseThrow(
                     () -> new ResourceNotFoundException("Book with ID: " + saleDTO.book_id() + " not found!"));
 
-            StockBook stock = stockRepository.findByIdBook(saleDTO.book_id());
+            StockBook stock = stockRepository.findByBookId(saleDTO.book_id());
 
             if (stock.getAmount() < saleDTO.amount()) {
                 throw new UnavailableQuantityException("Insufficient quantity in stock for sale.");
