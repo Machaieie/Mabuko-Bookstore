@@ -1,5 +1,7 @@
 package com.livrariamabuko.Livraria.Mabuko.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +53,12 @@ public class SaleService {
             sale.setBook(book);
             sale.setAmount(saleDTO.amount());
             sale.setSaleDate(saleDTO.saleDate());
-            sale.setTotal(saleDTO.amount() * book.getPrice());
+
+            BigDecimal total = BigDecimal.valueOf(saleDTO.amount())
+                    .multiply(BigDecimal.valueOf(book.getPrice()))
+                    .setScale(2, RoundingMode.UP);
+
+            sale.setTotal(total.doubleValue());
 
             sales.add(sale);
         }

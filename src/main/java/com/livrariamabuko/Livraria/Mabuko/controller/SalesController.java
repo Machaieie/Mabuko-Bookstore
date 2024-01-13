@@ -29,12 +29,9 @@ import com.livrariamabuko.Livraria.Mabuko.service.SaleService;
 
 import jakarta.validation.Valid;
 
-
-
 @RestController
 @RequestMapping("api/v1")
 public class SalesController {
-    
 
     @Autowired
     private SaleRepository saleRepository;
@@ -43,17 +40,19 @@ public class SalesController {
     private SaleService salesService;
 
     @GetMapping("/sales")
-    public List<Sales> getAllSales(){
+    public List<Sales> getAllSales() {
         List<Sales> sales = saleRepository.findAll();
-        if(sales.isEmpty()){
+        if (sales.isEmpty()) {
             throw new EmptyDatabaseException("No sales found in the database.");
         }
 
         return sales;
     }
+
     @GetMapping("/sale/{id}")
-    public ResponseEntity<Sales> getSaleById(@PathVariable(value = "id") long id)throws ResourceNotFoundException{
-        Sales sale = saleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Sale with ID:: " + id + " not found"));
+    public ResponseEntity<Sales> getSaleById(@PathVariable(value = "id") long id) throws ResourceNotFoundException {
+        Sales sale = saleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Sale with ID:: " + id + " not found"));
         return ResponseEntity.ok().body(sale);
     }
 
@@ -64,7 +63,7 @@ public class SalesController {
             return ResponseEntity.status(HttpStatus.CREATED).body(salesList);
         } catch (UnavailableQuantityException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-            // ou lance uma exceção apropriada e a deixe ser manipulada globalmente
+
         }
     }
 
