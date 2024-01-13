@@ -75,8 +75,8 @@ public class AuthorController {
         Author foundedAuthor = authorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Author with ID:: " + id + " not found"));
         foundedAuthor.setName(authorDTO.name());
-        foundedAuthor.setNationairy(authorDTO.nationairy());
-        foundedAuthor.setBibliography(authorDTO.bibliography());
+        foundedAuthor.setNationality(authorDTO.nationality());
+        foundedAuthor.setBiography(authorDTO.biography());
         final Author updateAuthor = authorRepository.save(foundedAuthor);
         return ResponseEntity.ok().body(updateAuthor);
     }

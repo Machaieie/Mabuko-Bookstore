@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 public record AuthorDTO(
 
 @NotBlank String name,
-@NotBlank String bibliography,
-@NotBlank String nationairy
+@NotBlank String biography,
+@NotBlank String nationality
 ) {
     
 }

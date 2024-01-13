@@ -25,8 +25,8 @@ public class Author implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private String bibliography;
-    private String nationairy;
+    private String biography;
+    private String nationality;
 
     @OneToMany(mappedBy = "author",fetch = FetchType.LAZY)
     @JsonManagedReference
@@ -49,20 +49,23 @@ public class Author implements Serializable {
         this.name = name;
     }
 
-    public String getBibliography() {
-        return bibliography;
+    
+
+
+    public String getBiography() {
+        return biography;
     }
 
-    public void setBibliography(String bibliography) {
-        this.bibliography = bibliography;
+    public void setBiography(String biography) {
+        this.biography = biography;
     }
 
-    public String getNationairy() {
-        return nationairy;
+    public String getNationality() {
+        return nationality;
     }
 
-    public void setNationairy(String nationairy) {
-        this.nationairy = nationairy;
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public List<Book> getBooks() {

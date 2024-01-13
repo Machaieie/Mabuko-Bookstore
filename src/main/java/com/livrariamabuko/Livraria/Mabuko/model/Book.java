@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name = "Books")
+@Table(name = "Book")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Book implements Serializable {
     private static final long serialVersionUID = 1L;
