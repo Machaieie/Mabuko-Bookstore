@@ -30,6 +30,7 @@ class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "api/v1/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/v1/auth/signup").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/v1/addSale").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/v1/sending-email").permitAll()
                         .anyRequest().authenticated())
                         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                         .build();

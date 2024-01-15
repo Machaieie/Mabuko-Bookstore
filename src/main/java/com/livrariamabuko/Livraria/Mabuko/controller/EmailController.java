@@ -16,8 +16,6 @@ import com.livrariamabuko.Livraria.Mabuko.exceptions.ResourceNotFoundException;
 import com.livrariamabuko.Livraria.Mabuko.model.EmailDetails;
 import com.livrariamabuko.Livraria.Mabuko.service.EmailService;
 
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping("api/v1")
 public class EmailController {
@@ -29,7 +27,7 @@ public class EmailController {
      public ResponseEntity<EmailDetails> sendingEmail(@RequestBody @Valid EmailDTO emailDTO) {
          EmailDetails emailDetails = new EmailDetails();
          BeanUtils.copyProperties(emailDTO, emailDetails);
-         String message = " Email: " + emailDTO.emailFrom() + "\n\n Mensagem: \n" + emailDTO.text();
+         String message =    emailDTO.text();
          emailDetails.setText(message);
          emailService.sendEmail(emailDetails);
          return new ResponseEntity<>(emailDetails, HttpStatus.CREATED);

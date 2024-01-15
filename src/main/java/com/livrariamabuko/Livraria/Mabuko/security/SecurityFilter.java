@@ -37,12 +37,8 @@ public class SecurityFilter extends OncePerRequestFilter {
                     if (user != null) {
                         var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                         SecurityContextHolder.getContext().setAuthentication(authentication);
-                    } else {
-                        // Lógica para lidar com o usuário não encontrado
-                    }
-                } else {
-                    // Lógica para lidar com token inválido
-                }
+                    } 
+                } 
             }
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido ou expirado");
