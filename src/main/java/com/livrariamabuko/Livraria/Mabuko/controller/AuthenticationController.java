@@ -40,43 +40,50 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-   @Autowired
+    @Autowired
     private TokenService tokenService;
-  
+
     @PostMapping("/login")
-public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO authenticationDTO) {
-    try {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(authenticationDTO.username(), authenticationDTO.password());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
+    public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO authenticationDTO) {
+        try {
+            // Cria um objeto de autenticação com as credenciais fornecidas
+            var usernamePassword = new UsernamePasswordAuthenticationToken(authenticationDTO.username(),
+                    authenticationDTO.password());
 
-        // Obtém informações sobre o usuário autenticado
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            // Autentica o usuário
+            var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        // Adiciona informações ao corpo da resposta
-        Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("username", userDetails.getUsername());
-        responseBody.put("roles", userDetails.getAuthorities());
+            // Obtém informações sobre o usuário autenticado
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
 
-        var token = tokenService.generateToken((User) auth.getPrincipal());
+            // Adiciona informações do usuário ao corpo da resposta
+            Map<String, Object> responseBody = new HashMap<>();
+            responseBody.put("id", ((User) auth.getPrincipal()).getId());
+            responseBody.put("name", ((User) auth.getPrincipal()).getName());
+            responseBody.put("username", userDetails.getUsername());
+            responseBody.put("roles", userDetails.getAuthorities());
+            // Gera o token JWT para o usuário autenticado
+            var token = tokenService.generateToken((User) auth.getPrincipal());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
-    } catch (BadCredentialsException e) {
-        // Captura a exceção de credenciais inválidas
-        throw new ResourceNotFoundException("Utilizador ou Senha incorrecta, tente novamente !");
-    } catch (Exception e) {
-        // Logs para verificar mensagens de erro ou exceções
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            // Adiciona o token ao corpo da resposta
+            responseBody.put("token", token);
+
+            // Retorna a resposta com as informações do usuário e o token
+            return ResponseEntity.ok(responseBody);
+        } catch (BadCredentialsException e) {
+            // Captura a exceção de credenciais inválidas
+            throw new ResourceNotFoundException("Utilizador ou Senha incorretos, tente novamente!");
+        } catch (Exception e) {
+            // Logs para verificar mensagens de erro ou exceções
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
-}
-
-    
-
 
     @PostMapping("/signup")
-	public ResponseEntity<?> signup(@RequestBody SignUpDTO requestDTO) throws Exception {
-		User user = userService.registerUser(requestDTO);
-		return ResponseEntity.ok().body(user.getConfirmationToken()); 
-	}
-    
+    public ResponseEntity<?> signup(@RequestBody SignUpDTO requestDTO) throws Exception {
+        User user = userService.registerUser(requestDTO);
+        return ResponseEntity.ok().body(user.getConfirmationToken());
+    }
+
 }

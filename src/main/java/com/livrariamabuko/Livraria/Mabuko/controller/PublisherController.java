@@ -69,6 +69,7 @@ public class PublisherController {
         foundedPublisher.setName(publisherDTO.name());
         foundedPublisher.setLocation(publisherDTO.location());
         foundedPublisher.setPhone(publisherDTO.phone());
+        foundedPublisher.setNuit(publisherDTO.nuit());
 
         final Publisher updatedPublisher = publisherRepository.save(foundedPublisher);
         return ResponseEntity.ok().body(updatedPublisher);
