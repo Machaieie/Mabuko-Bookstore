@@ -23,7 +23,7 @@ public class EmailController {
      @Autowired
      private EmailService emailService;
  
-     @PostMapping("/sending-email")
+     @PostMapping("/sendingemail")
      public ResponseEntity<EmailDetails> sendingEmail(@RequestBody @Valid EmailDTO emailDTO) {
          EmailDetails emailDetails = new EmailDetails();
          BeanUtils.copyProperties(emailDTO, emailDetails);
