@@ -1,5 +1,7 @@
 package com.livrariamabuko.Livraria.Mabuko.security.filter;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,34 +9,39 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
+
+
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.core.AuthenticationException;
+
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.livrariamabuko.Livraria.Mabuko.DTOs.AuthResponseDTO;
 import com.livrariamabuko.Livraria.Mabuko.model.User;
 import com.livrariamabuko.Livraria.Mabuko.security.security.JwtUtil;
-import org.springframework.security.core.Authentication;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private final AuthenticationManager authenticationManager;
 
+	private final AuthenticationManager authenticationManager;
 
-    public AuthenticationFilter(AuthenticationManager authenticationManager) {
+	public AuthenticationFilter(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
 
 	}
 
-    @Override
+	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
 
@@ -54,8 +61,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 						.map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
 				.sign(JwtUtil.getAlgorithm());
 
-		AuthResponseDTO authResponseDTO = new AuthResponseDTO(principal.getId(),principal.getName(),
-				principal.getUsername(), access_token);
+		AuthResponseDTO authResponseDTO = new AuthResponseDTO(principal.getId(), principal.getName(),
+				principal.getUsername(), access_token );
 		authResponseDTO.setRoles(principal.getRoles());
 
 		response.setContentType(APPLICATION_JSON_VALUE);
@@ -83,5 +90,4 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 		response.getOutputStream().println(objectMapper.writeValueAsString(data));
 	}
-
 }

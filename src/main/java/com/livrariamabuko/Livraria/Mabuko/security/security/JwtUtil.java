@@ -1,7 +1,10 @@
 package com.livrariamabuko.Livraria.Mabuko.security.security;
 
+import org.springframework.stereotype.Service;
+
 import com.auth0.jwt.algorithms.Algorithm;
 
+@Service
 public class JwtUtil {
 
     public static final String JWT_HEADER = "Authorization";
