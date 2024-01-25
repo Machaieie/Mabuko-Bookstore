@@ -1,11 +1,13 @@
 package com.livrariamabuko.Livraria.Mabuko.controller;
 
+import com.livrariamabuko.Livraria.Mabuko.DTOs.AuthResponseDTO;
 import com.livrariamabuko.Livraria.Mabuko.DTOs.AuthenticationDTO;
 import com.livrariamabuko.Livraria.Mabuko.DTOs.LoginResponseDTO;
 import com.livrariamabuko.Livraria.Mabuko.DTOs.SignUpDTO;
 import com.livrariamabuko.Livraria.Mabuko.exceptions.DuplicatedEntityException;
 import com.livrariamabuko.Livraria.Mabuko.exceptions.ResourceNotFoundException;
 import com.livrariamabuko.Livraria.Mabuko.model.User;
+import com.livrariamabuko.Livraria.Mabuko.model.UserRole;
 import com.livrariamabuko.Livraria.Mabuko.repository.UserRepository;
 import com.livrariamabuko.Livraria.Mabuko.security.TokenService;
 import com.livrariamabuko.Livraria.Mabuko.service.UserService;
@@ -14,6 +16,7 @@ import jakarta.validation.Valid;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,43 +43,43 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-   @Autowired
+    @Autowired
     private TokenService tokenService;
-  
+
     @PostMapping("/login")
-public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO authenticationDTO) {
-    try {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(authenticationDTO.username(), authenticationDTO.password());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
+    public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO authenticationDTO) {
+        try {
+            var usernamePassword = new UsernamePasswordAuthenticationToken(authenticationDTO.username(),
+                    authenticationDTO.password());
+            var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        // Obtém informações sobre o usuário autenticado
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+          
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
 
-        // Adiciona informações ao corpo da resposta
-        Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("username", userDetails.getUsername());
-        responseBody.put("roles", userDetails.getAuthorities());
+            
+            Set<UserRole> roles = ((User) auth.getPrincipal()).getRoles();
+            AuthResponseDTO authResponseDTO = new AuthResponseDTO();
+            authResponseDTO.setId(((User) auth.getPrincipal()).getId());
+            authResponseDTO.setName(((User) auth.getPrincipal()).getName());
+            authResponseDTO.setUsername(userDetails.getUsername());
+            authResponseDTO.setRoles(roles);
 
-        var token = tokenService.generateToken((User) auth.getPrincipal());
+            var token = tokenService.generateToken((User) auth.getPrincipal());
+            authResponseDTO.setToken(token);
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
-    } catch (BadCredentialsException e) {
-        // Captura a exceção de credenciais inválidas
-        throw new ResourceNotFoundException("Utilizador ou Senha incorrecta, tente novamente !");
-    } catch (Exception e) {
-        // Logs para verificar mensagens de erro ou exceções
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.ok(authResponseDTO);
+        } catch (BadCredentialsException e) {
+            throw new ResourceNotFoundException("Utilizador ou Senha incorrecta, tente novamente !");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
-}
-
-    
-
 
     @PostMapping("/signup")
-	public ResponseEntity<?> signup(@RequestBody SignUpDTO requestDTO) throws Exception {
-		User user = userService.registerUser(requestDTO);
-		return ResponseEntity.ok().body(user.getConfirmationToken()); 
-	}
-    
+    public ResponseEntity<?> signup(@RequestBody SignUpDTO requestDTO) throws Exception {
+        User user = userService.registerUser(requestDTO);
+        return ResponseEntity.ok().body(user.getConfirmationToken());
+    }
+
 }
