@@ -33,10 +33,11 @@ class SecurityConfigurations {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "api/v1/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "api/v1/auth/signup").permitAll()
+                        
                         .requestMatchers(HttpMethod.POST, "api/v1/addSale").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/v1/sending-email").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/v1/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/v1/auth/alluser").permitAll()
                         .anyRequest().authenticated())
                         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                         .build();

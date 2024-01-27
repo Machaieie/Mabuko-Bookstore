@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -20,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.livrariamabuko.Livraria.Mabuko.DTOs.AuthenticationDTO;
 import com.livrariamabuko.Livraria.Mabuko.DTOs.SignUpDTO;
+import com.livrariamabuko.Livraria.Mabuko.exceptions.EmptyDatabaseException;
 import com.livrariamabuko.Livraria.Mabuko.model.User;
 import com.livrariamabuko.Livraria.Mabuko.model.UserRole;
 import com.livrariamabuko.Livraria.Mabuko.repository.UserRepository;
@@ -68,6 +70,12 @@ public class UserService implements UserDetailsService {
 
     }
 
-    
+   public List<User> getAllUsers(){
+         List<User> users = userRepository.findAll();
+        if (users.isEmpty()) {
+            throw new EmptyDatabaseException("No authors found in the database.");
+        }
 
+        return users;
+    }
 }
