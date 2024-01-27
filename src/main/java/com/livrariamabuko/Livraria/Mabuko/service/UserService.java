@@ -1,7 +1,10 @@
 package com.livrariamabuko.Livraria.Mabuko.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 import org.hibernate.cfg.Environment;
@@ -48,6 +51,7 @@ public class UserService implements UserDetailsService {
         if (userRepository.existsByUsername(request.username())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ja existe usuario com nome indicado");
         }
+         
         User user = new User();
         user.setUsername(request.username());
         user.setName(request.name());

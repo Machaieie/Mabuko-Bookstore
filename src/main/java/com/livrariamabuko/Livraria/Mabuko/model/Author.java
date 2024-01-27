@@ -25,6 +25,7 @@ public class Author implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
+    private String gender;
     private String biography;
     private String nationality;
 
@@ -33,9 +34,22 @@ public class Author implements Serializable {
     @JsonIgnore
     private List<Book> books;
 
+
+
     public long getId() {
         return id;
     }
+
+    
+    public String getGender() {
+        return gender;
+    }
+
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
 
     public void setId(long id) {
         this.id = id;

@@ -25,6 +25,7 @@ public class Publisher implements Serializable {
     private long id;
     private String name;
     private String location;
+    private String nuit;
     private String phone;
 
     @OneToMany(mappedBy = "publisher",fetch = FetchType.LAZY)
@@ -38,6 +39,15 @@ public class Publisher implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+    
+
+    public String getNuit() {
+        return nuit;
+    }
+
+    public void setNuit(String nuit) {
+        this.nuit = nuit;
     }
 
     public String getName() {
