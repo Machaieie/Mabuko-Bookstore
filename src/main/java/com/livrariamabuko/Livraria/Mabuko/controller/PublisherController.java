@@ -51,7 +51,7 @@ public class PublisherController {
 
         return ResponseEntity.status(HttpStatus.OK).body(publishers);
     }
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/publisher")
     public ResponseEntity addNewPublisher(@Valid @RequestBody PublisherDTO publisherDTO) {
         Publisher publisher = new Publisher();
