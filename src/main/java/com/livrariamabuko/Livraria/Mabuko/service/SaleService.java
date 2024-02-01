@@ -66,4 +66,8 @@ public class SaleService {
         return saleRepository.saveAll(sales);
     }
 
+    public long countSales(){
+        return saleRepository.count();
+    }
+
 }

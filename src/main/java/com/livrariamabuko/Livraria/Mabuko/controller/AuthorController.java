@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("api/v1")
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthorController {
 
     @Autowired
@@ -61,6 +61,7 @@ public class AuthorController {
         return ResponseEntity.status(HttpStatus.OK).body(authors);
     }
 
+    
     @PostMapping("/author")
     public ResponseEntity addNewAuthor(@Valid @RequestBody AuthorDTO authorDTO) {
         Author author = new Author();

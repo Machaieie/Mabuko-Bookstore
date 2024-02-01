@@ -41,6 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/v1/auth")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthenticationController {
 
     @Autowired
@@ -52,7 +53,7 @@ public class AuthenticationController {
     @Autowired
     private TokenService tokenService;
 
-    @CrossOrigin(origins = "http://localhost:5173")
+    
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO authenticationDTO) {
         try {

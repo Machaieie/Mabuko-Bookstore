@@ -17,11 +17,12 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PublisherController {
 
     @Autowired
     private PublisherRepository publisherRepository;
-
+    
     @GetMapping("/publishers")
     public List<Publisher> getAllPublishers() {
         List<Publisher> publishers = publisherRepository.findAll();
@@ -31,7 +32,7 @@ public class PublisherController {
 
         return publishers;
     }
-
+    
     @GetMapping("/publisher/{id}")
     public ResponseEntity<Publisher> getPublisherById(@PathVariable(value = "id") long id)
             throws ResourceNotFoundException {
@@ -51,7 +52,7 @@ public class PublisherController {
 
         return ResponseEntity.status(HttpStatus.OK).body(publishers);
     }
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    
     @PostMapping("/publisher")
     public ResponseEntity addNewPublisher(@Valid @RequestBody PublisherDTO publisherDTO) {
         Publisher publisher = new Publisher();
