@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 
 @Service
 public class JwtUtil {
+
     public static final String JWT_HEADER = "Authorization";
 
 	public static final String JWT_PREFIX = "Bearer ";
@@ -15,5 +16,6 @@ public class JwtUtil {
 	public static Algorithm getAlgorithm() {
 		return Algorithm.HMAC256(JwtUtil.SECRET_KEY.getBytes());
 	}
+
 
 }

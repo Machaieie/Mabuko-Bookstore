@@ -50,13 +50,13 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.OK).body(clients);
     }
 
-    @PostMapping("/clients")
+    @PostMapping("/createClient")
     public ResponseEntity addNewClient(@Valid @RequestBody Client client) {
         Client savedClient = clientRepository.save(client);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/clients/{id}")
+    @PutMapping("/updateClient/{id}")
     public ResponseEntity<Object> updateClient(@PathVariable(value = "id") long id,
             @Valid @RequestBody Client client) throws ResourceNotFoundException {
         Client foundClient = clientRepository.findById(id)
@@ -66,7 +66,7 @@ public class ClientController {
         return ResponseEntity.ok().body(updatedClient);
     }
 
-    @DeleteMapping("/clients/{id}")
+    @DeleteMapping("/dropclient/{id}")
     public ResponseEntity<Object> deleteClientEntity(@PathVariable(value = "id") long id)
             throws ResourceNotFoundException {
         Client foundClient = clientRepository.findById(id)

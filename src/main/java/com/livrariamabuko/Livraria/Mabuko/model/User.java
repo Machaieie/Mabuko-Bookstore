@@ -46,8 +46,6 @@ public class User implements UserDetails {
 	@Column
 	private boolean enabled;
 	
-	@Column
-	private boolean passwordChanged;
 
     private String confirmationToken;
 
@@ -127,12 +125,7 @@ public class User implements UserDetails {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-    public boolean isPasswordChanged() {
-        return passwordChanged;
-    }
-    public void setPasswordChanged(boolean passwordChanged) {
-        this.passwordChanged = passwordChanged;
-    }
+    
     public String getConfirmationToken() {
         return confirmationToken;
     }
