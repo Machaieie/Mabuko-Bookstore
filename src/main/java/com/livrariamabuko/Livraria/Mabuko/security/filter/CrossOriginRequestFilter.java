@@ -1,17 +1,15 @@
 package com.livrariamabuko.Livraria.Mabuko.security.filter;
-
-import org.springframework.core.annotation.Order;
-
+import org.springframework.core.Ordered;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.livrariamabuko.Livraria.Mabuko.security.config.CpnConfigs;
 
+import com.livrariamabuko.Livraria.Mabuko.security.config.CpnConfigs;
 import com.fasterxml.classmate.Filter;
-import ch.qos.logback.core.spi.FilterReply;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
@@ -64,15 +62,12 @@ public class CrossOriginRequestFilter implements Filter{
 		return trustedOrigin && preflightRequest;
 	}
 
-	
-    
-
     @Override
     public boolean include(Object element) {
         // TODO Auto-generated method stub
         return false;
     }
 
-   
-    
+	
+
 }

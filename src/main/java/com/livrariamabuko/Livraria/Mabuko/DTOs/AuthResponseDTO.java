@@ -75,5 +75,4 @@ public class AuthResponseDTO implements Serializable{
 	public void setRoles(Set<UserRole> roles) {
 		this.roles = roles;
 	}
-    
 }
