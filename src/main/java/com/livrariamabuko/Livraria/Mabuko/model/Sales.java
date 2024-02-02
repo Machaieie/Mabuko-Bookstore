@@ -3,6 +3,8 @@ package com.livrariamabuko.Livraria.Mabuko.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -32,6 +34,32 @@ public class Sales implements Serializable{
     
 
     private double total;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Client client;
+
+    @ManyToMany(mappedBy = "sales")
+    private Set<Payment> Payment = new HashSet<>();
+
+    
+
+    public Set<Payment> getPayment() {
+        return Payment;
+    }
+
+    public void setPayment(Set<Payment> payment) {
+        Payment = payment;
+    }
+
+    
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     public long getId() {
         return id;

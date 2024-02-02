@@ -7,7 +7,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 
+
 import com.livrariamabuko.Livraria.Mabuko.security.config.CpnConfigs;
+
+import com.livrariamabuko.Livraria.Mabuko.security.config.CpnConfig;
+
 import com.fasterxml.classmate.Filter;
 
 import jakarta.servlet.FilterChain;
@@ -25,6 +29,9 @@ public class CrossOriginRequestFilter implements Filter{
 
 	@Autowired
 	private CpnConfigs configuration;
+
+	
+
 
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// nothing to do.

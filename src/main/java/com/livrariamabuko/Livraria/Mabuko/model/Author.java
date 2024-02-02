@@ -34,9 +34,22 @@ public class Author implements Serializable {
     @JsonIgnore
     private List<Book> books;
 
+
+
     public long getId() {
         return id;
     }
+
+    
+    public String getGender() {
+        return gender;
+    }
+
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
 
     public void setId(long id) {
         this.id = id;
@@ -53,13 +66,6 @@ public class Author implements Serializable {
     
 
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
 
     public String getBiography() {
         return biography;

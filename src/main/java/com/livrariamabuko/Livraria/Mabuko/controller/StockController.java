@@ -12,12 +12,15 @@ import com.livrariamabuko.Livraria.Mabuko.model.Book;
 import com.livrariamabuko.Livraria.Mabuko.model.StockBook;
 import com.livrariamabuko.Livraria.Mabuko.repository.BookRepository;
 import com.livrariamabuko.Livraria.Mabuko.repository.StockRepository;
+import com.livrariamabuko.Livraria.Mabuko.service.StockService;
 
 import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+
 public class StockController {
 
     @Autowired
@@ -25,6 +28,9 @@ public class StockController {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private StockService stockService;
 
     @GetMapping("/stock")
     public List<StockBook> getAllStock() {
@@ -44,6 +50,11 @@ public class StockController {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Informação de estoque com ID:: " + id + " não encontrada"));
         return ResponseEntity.ok().body(stockBook);
+    }
+
+    @GetMapping("/countStockBook")
+    public long countNumberOfBooks(){
+        return stockService.countBooksInStock();
     }
 
     @PostMapping("/stock")

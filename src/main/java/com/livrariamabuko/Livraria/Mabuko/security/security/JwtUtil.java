@@ -17,5 +17,5 @@ public class JwtUtil {
 		return Algorithm.HMAC256(JwtUtil.SECRET_KEY.getBytes());
 	}
 
-    
+
 }

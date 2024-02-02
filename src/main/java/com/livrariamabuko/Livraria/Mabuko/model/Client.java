@@ -20,6 +20,8 @@ public class Client implements Serializable{
     private String email;
     private String address;
 
+    
+
 
     public long getId() {
         return id;

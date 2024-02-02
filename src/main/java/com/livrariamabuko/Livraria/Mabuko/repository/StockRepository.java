@@ -12,4 +12,6 @@ import com.livrariamabuko.Livraria.Mabuko.model.StockBook;
 public interface StockRepository extends JpaRepository<StockBook, Long> {
     
      StockBook  findByBookId(long id);
+
+     Long countByAmountGreaterThan(int amount);
 }
