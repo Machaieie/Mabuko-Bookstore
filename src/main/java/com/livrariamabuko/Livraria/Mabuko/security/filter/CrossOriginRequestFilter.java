@@ -12,6 +12,11 @@ import com.livrariamabuko.Livraria.Mabuko.security.config.CpnConfigs;
 
 import com.livrariamabuko.Livraria.Mabuko.security.config.CpnConfig;
 
+
+
+import com.livrariamabuko.Livraria.Mabuko.security.config.CpnConfigs;
+
+
 import com.fasterxml.classmate.Filter;
 
 import jakarta.servlet.FilterChain;
@@ -28,7 +33,15 @@ public class CrossOriginRequestFilter implements Filter{
     private static final String PREFLIGHT_REQUEST_METHOD = "OPTIONS";
 
 	@Autowired
+
+
+	private CpnConfig configuration;
+
 	private CpnConfigs configuration;
+
+	
+
+
 
 	
 

@@ -64,6 +64,12 @@ public class AuthenticationController {
           
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
 
+
+            
+           
+
+
+
             
             Set<UserRole> roles = ((User) auth.getPrincipal()).getRoles();
             AuthResponseDTO authResponseDTO = new AuthResponseDTO();
@@ -71,6 +77,7 @@ public class AuthenticationController {
             authResponseDTO.setName(((User) auth.getPrincipal()).getName());
             authResponseDTO.setUsername(userDetails.getUsername());
             authResponseDTO.setRoles(roles);
+
 
             var token = tokenService.generateToken((User) auth.getPrincipal());
             authResponseDTO.setToken(token);
@@ -97,4 +104,8 @@ public class AuthenticationController {
     }
 
 
+
 }
+
+
+
