@@ -33,6 +33,8 @@ public class Payment implements Serializable{
 
     private String type;
     private double amount;
+
+    
     public Set<Sales> getSales() {
         return sales;
     }

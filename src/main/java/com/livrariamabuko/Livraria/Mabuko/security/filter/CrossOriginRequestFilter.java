@@ -37,7 +37,7 @@ public class CrossOriginRequestFilter implements Filter{
 
 	private CpnConfig configuration;
 
-	private CpnConfigs configuration;
+	
 
 	
 
