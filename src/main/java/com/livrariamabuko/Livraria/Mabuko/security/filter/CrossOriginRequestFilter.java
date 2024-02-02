@@ -6,10 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.livrariamabuko.Livraria.Mabuko.security.config.CpnConfig;
 
 
 import com.livrariamabuko.Livraria.Mabuko.security.config.CpnConfigs;
+
+import com.livrariamabuko.Livraria.Mabuko.security.config.CpnConfig;
+
+
+
+import com.livrariamabuko.Livraria.Mabuko.security.config.CpnConfigs;
+
 
 import com.fasterxml.classmate.Filter;
 
@@ -28,7 +34,14 @@ public class CrossOriginRequestFilter implements Filter{
 
 	@Autowired
 
+
 	private CpnConfig configuration;
+
+	private CpnConfigs configuration;
+
+	
+
+
 
 	
 

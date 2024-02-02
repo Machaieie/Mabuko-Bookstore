@@ -66,7 +66,7 @@ public class Author implements Serializable {
     
 
 
-    
+
 
     public String getBiography() {
         return biography;
