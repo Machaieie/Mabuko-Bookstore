@@ -66,12 +66,7 @@ public class AuthenticationController {
 
 
             
-            Set<UserRole> roles = ((User) auth.getPrincipal()).getRoles();
-            AuthResponseDTO authResponseDTO = new AuthResponseDTO();
-            authResponseDTO.setId(((User) auth.getPrincipal()).getId());
-            authResponseDTO.setName(((User) auth.getPrincipal()).getName());
-            authResponseDTO.setUsername(userDetails.getUsername());
-            authResponseDTO.setRoles(roles);
+           
 
 
 
@@ -112,5 +107,5 @@ public class AuthenticationController {
 
 }
 
-}
+
 

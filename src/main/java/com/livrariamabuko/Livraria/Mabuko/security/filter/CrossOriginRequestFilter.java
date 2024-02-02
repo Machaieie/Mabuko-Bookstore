@@ -30,7 +30,7 @@ public class CrossOriginRequestFilter implements Filter{
 
 	private CpnConfig configuration;
 
-	private CpnConfigs configuration;
+	
 
 
 	public void init(FilterConfig filterConfig) throws ServletException {

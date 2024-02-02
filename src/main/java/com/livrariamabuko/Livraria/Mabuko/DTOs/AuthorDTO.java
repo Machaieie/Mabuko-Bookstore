@@ -7,7 +7,7 @@ public record AuthorDTO(
 @NotBlank String name,
 @NotBlank String gender,
 @NotBlank String biography,
-@NotBlank String gender,
+
 @NotBlank String nationality
 ) {
     

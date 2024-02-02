@@ -27,7 +27,7 @@ public class Publisher implements Serializable {
     private String location;
     private String nuit;
     private String phone;
-    private String nuit;
+  
     
 
     @OneToMany(mappedBy = "publisher",fetch = FetchType.LAZY)
@@ -44,13 +44,7 @@ public class Publisher implements Serializable {
     }
     
 
-    public String getNuit() {
-        return nuit;
-    }
-
-    public void setNuit(String nuit) {
-        this.nuit = nuit;
-    }
+   
 
     public String getName() {
         return name;
