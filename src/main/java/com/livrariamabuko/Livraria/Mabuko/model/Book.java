@@ -1,6 +1,9 @@
 package com.livrariamabuko.Livraria.Mabuko.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -36,6 +39,9 @@ public class Book implements Serializable {
 
     @OneToOne(mappedBy = "book",fetch = FetchType.LAZY)
     private StockBook estoque;
+
+    @ManyToMany(mappedBy = "books")
+    private Set<Promotion> promotions = new HashSet<>();
 
     public long getId() {
         return id;
