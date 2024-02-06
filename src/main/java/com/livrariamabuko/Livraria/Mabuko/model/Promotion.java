@@ -1,8 +1,7 @@
 package com.livrariamabuko.Livraria.Mabuko.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -12,7 +11,7 @@ import jakarta.persistence.*;
 @Table(name = "Promotion")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Promotion implements Serializable{
-    private long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +20,9 @@ public class Promotion implements Serializable{
     private String startDate;
     private String endDate;
     
-     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "PromotionBook",
-               joinColumns = @JoinColumn(name = "promotion_id"),
-               inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private Set<Book> books = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    private Book book;
     
 
     public long getId() {
@@ -60,13 +57,15 @@ public class Promotion implements Serializable{
         this.endDate = endDate;
     }
 
-    public Set<Book> getBooks() {
-        return books;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBooks(Set<Book> books) {
-        this.books = books;
+    public void setBook(Book book) {
+        this.book = book;
     }
+
+   
 
     
 

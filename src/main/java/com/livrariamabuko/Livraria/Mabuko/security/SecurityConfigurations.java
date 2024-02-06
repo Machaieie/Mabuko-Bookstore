@@ -35,9 +35,10 @@ class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "api/v1/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/v1/publisher").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/v1/author").permitAll()
-                        .requestMatchers(HttpMethod.GET, "api/v1/books").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/v1/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/v1/addBook").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/v1/promotion").permitAll()
                         .anyRequest().permitAll()
-                        
                         )
                         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                         .cors(cors -> cors.disable())
