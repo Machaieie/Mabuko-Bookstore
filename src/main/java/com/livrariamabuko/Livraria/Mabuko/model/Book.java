@@ -40,8 +40,9 @@ public class Book implements Serializable {
     @OneToOne(mappedBy = "book",fetch = FetchType.LAZY)
     private StockBook estoque;
 
-    @ManyToMany(mappedBy = "books")
-    private Set<Promotion> promotions = new HashSet<>();
+ 
+
+    
 
     public long getId() {
         return id;

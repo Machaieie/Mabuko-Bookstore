@@ -20,34 +20,34 @@ import com.livrariamabuko.Livraria.Mabuko.service.EmailService;
 @RequestMapping("api/v1")
 public class EmailController {
     
-     @Autowired
-     private EmailService emailService;
+    //  @Autowired
+    //  private EmailService emailService;
  
-     @PostMapping("/sendingemail")
-     public ResponseEntity<EmailDetails> sendingEmail(@RequestBody @Valid EmailDTO emailDTO) {
-         EmailDetails emailDetails = new EmailDetails();
-         BeanUtils.copyProperties(emailDTO, emailDetails);
-         String message =    emailDTO.text();
-         emailDetails.setText(message);
-         emailService.sendEmail(emailDetails);
-         return new ResponseEntity<>(emailDetails, HttpStatus.CREATED);
-     }
+    //  @PostMapping("/sendingemail")
+    //  public ResponseEntity<EmailDetails> sendingEmail(@RequestBody @Valid EmailDTO emailDTO) {
+    //      EmailDetails emailDetails = new EmailDetails();
+    //      BeanUtils.copyProperties(emailDTO, emailDetails);
+    //      String message =    emailDTO.text();
+    //      emailDetails.setText(message);
+    //      emailService.sendEmail(emailDetails);
+    //      return new ResponseEntity<>(emailDetails, HttpStatus.CREATED);
+    //  }
 
-     @GetMapping("/emails")
-     public ResponseEntity<Page<EmailDetails>> getAllEmails(
-             @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-         return new ResponseEntity<>(emailService.findAll(pageable), HttpStatus.OK);
-     }
+    //  @GetMapping("/emails")
+    //  public ResponseEntity<Page<EmailDetails>> getAllEmails(
+    //          @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    //      return new ResponseEntity<>(emailService.findAll(pageable), HttpStatus.OK);
+    //  }
 
-     @GetMapping("/emails/{id}")
-     public ResponseEntity<Object> getOneEmail(@PathVariable(value = "id") long id) {
-         try {
-             EmailDetails emailDetails = emailService.findById(id)
-                     .orElseThrow(() -> new ResourceNotFoundException("Email  with id: " + id+" not found"));
+    //  @GetMapping("/emails/{id}")
+    //  public ResponseEntity<Object> getOneEmail(@PathVariable(value = "id") long id) {
+    //      try {
+    //          EmailDetails emailDetails = emailService.findById(id)
+    //                  .orElseThrow(() -> new ResourceNotFoundException("Email  with id: " + id+" not found"));
 
-             return ResponseEntity.status(HttpStatus.OK).body(emailDetails);
-         } catch (ResourceNotFoundException e) {
-             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-         }
-     }
+    //          return ResponseEntity.status(HttpStatus.OK).body(emailDetails);
+    //      } catch (ResourceNotFoundException e) {
+    //          return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    //      }
+    //  }
 }
