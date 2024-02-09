@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
 @Table(name = "Payment")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Payment implements Serializable{
-    private long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +33,8 @@ public class Payment implements Serializable{
 
     private String type;
     private double amount;
+
+    
     public Set<Sales> getSales() {
         return sales;
     }

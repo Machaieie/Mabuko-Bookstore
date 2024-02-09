@@ -33,7 +33,7 @@ public class Sales implements Serializable{
     private ZonedDateTime saleDate;
     
 
-    private double total;
+  
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -93,14 +93,7 @@ public class Sales implements Serializable{
         this.saleDate = saleDate;
     }
 
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
+    
     
     
     

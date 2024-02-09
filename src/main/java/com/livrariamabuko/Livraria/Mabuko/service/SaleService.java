@@ -54,11 +54,7 @@ public class SaleService {
             sale.setAmount(saleDTO.amount());
             sale.setSaleDate(saleDTO.saleDate());
 
-            BigDecimal total = BigDecimal.valueOf(saleDTO.amount())
-                    .multiply(BigDecimal.valueOf(book.getPrice()))
-                    .setScale(2, RoundingMode.UP);
-
-            sale.setTotal(total.doubleValue());
+          
 
             sales.add(sale);
         }

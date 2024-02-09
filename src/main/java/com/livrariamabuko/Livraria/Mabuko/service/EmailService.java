@@ -20,33 +20,33 @@ public class EmailService {
        @Autowired
      EmailRepository emailRepository;
    
-     @Autowired
-     private JavaMailSender emailSender;
+    //  @Autowired
+    //  private JavaMailSender emailSender;
 
-     public EmailDetails sendEmail(EmailDetails emailDetails) {
-         emailDetails.setSendDateEmail(LocalDateTime.now());
-         try{
-             SimpleMailMessage message = new SimpleMailMessage();
-             message.setFrom(emailDetails.getEmailFrom());
-             message.setTo(emailDetails.getEmailTo());
-             message.setSubject(emailDetails.getSubject());
-             message.setText(emailDetails.getText());
-             emailSender.send(message);
+    //  public EmailDetails sendEmail(EmailDetails emailDetails) {
+    //      emailDetails.setSendDateEmail(LocalDateTime.now());
+    //      try{
+    //          SimpleMailMessage message = new SimpleMailMessage();
+    //          message.setFrom(emailDetails.getEmailFrom());
+    //          message.setTo(emailDetails.getEmailTo());
+    //          message.setSubject(emailDetails.getSubject());
+    //          message.setText(emailDetails.getText());
+    //          emailSender.send(message);
 
-             emailDetails.setStatusEmail(EmailStatus.SENT);
-         } catch (MailException e){
-             emailDetails.setStatusEmail(EmailStatus.ERROR);
-         } finally {
-            return emailRepository.save(emailDetails);
+    //          emailDetails.setStatusEmail(EmailStatus.SENT);
+    //      } catch (MailException e){
+    //          emailDetails.setStatusEmail(EmailStatus.ERROR);
+    //      } finally {
+    //         return emailRepository.save(emailDetails);
 
-         }
-     }
+    //      }
+    //  }
 
-     public Page<EmailDetails> findAll(Pageable pageable) {
-         return  emailRepository.findAll(pageable);
-     }
+    //  public Page<EmailDetails> findAll(Pageable pageable) {
+    //      return  emailRepository.findAll(pageable);
+    //  }
 
-     public Optional<EmailDetails> findById(long emailId) {
-         return emailRepository.findById(emailId);
-     }
+    //  public Optional<EmailDetails> findById(long emailId) {
+    //      return emailRepository.findById(emailId);
+    //  }
 }

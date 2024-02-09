@@ -1,20 +1,19 @@
 package com.livrariamabuko.Livraria.Mabuko.DTOs;
 
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record BookDTO(
-                @NotBlank(message = "Title is required") String title,
+        String title,
 
-                @NotBlank String publisherDate,
+        String publisherDate,
 
-                @NotNull int edition,
+        int edition,
 
-                @NotBlank(message = "Gender is required") String gender,
-                @NotNull double price,
+        String gender,
+        double price,
 
-                @NotNull(message = "Author is required") long author_id,
+        long author_id,
 
-                @NotNull(message = "Publisher is required") long publisher_id) {
+        long publisher_id) {
 }
