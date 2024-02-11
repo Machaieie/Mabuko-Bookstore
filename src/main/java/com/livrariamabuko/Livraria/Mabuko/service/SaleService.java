@@ -2,6 +2,8 @@ package com.livrariamabuko.Livraria.Mabuko.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +54,7 @@ public class SaleService {
             Sales sale = new Sales();
             sale.setBook(book);
             sale.setAmount(saleDTO.amount());
-            sale.setSaleDate(saleDTO.saleDate());
+            sale.setSaleDate(getCurrentDateTime());
 
           
 
@@ -65,5 +67,11 @@ public class SaleService {
     public long countSales(){
         return saleRepository.count();
     }
+
+    private String getCurrentDateTime() {
+    LocalDateTime now = LocalDateTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    return now.format(formatter);
+}
 
 }

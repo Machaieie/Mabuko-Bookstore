@@ -38,6 +38,9 @@ class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "api/v1/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/v1/addBook").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/v1/promotion").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/v1/addSale").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/v1/payment").permitAll()
+                        
                         .anyRequest().permitAll()
                         )
                         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
