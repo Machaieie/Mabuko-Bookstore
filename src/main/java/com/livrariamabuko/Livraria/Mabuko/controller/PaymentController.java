@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PaymentController {
 
     @Autowired

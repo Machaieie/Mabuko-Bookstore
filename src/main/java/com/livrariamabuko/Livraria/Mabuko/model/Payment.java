@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
@@ -25,16 +26,18 @@ public class Payment implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "sale_payment",
             joinColumns = @JoinColumn(name = "payment_id"),
             inverseJoinColumns = @JoinColumn(name = "sale_id"))
-    private Set<Sales> sales = new HashSet<>();
+    private Set<Sales> sales;
 
     private String type;
     private double amount;
 
     
+   
     public Set<Sales> getSales() {
         return sales;
     }

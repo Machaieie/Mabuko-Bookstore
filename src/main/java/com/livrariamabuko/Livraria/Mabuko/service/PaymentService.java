@@ -1,6 +1,6 @@
 package com.livrariamabuko.Livraria.Mabuko.service;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,8 @@ public class PaymentService {
         Payment payment = new Payment();
         payment.setType(paymentDTO.type());
         payment.setAmount(paymentDTO.amount());
-        payment.setDate(paymentDTO.date());
-
+        payment.setDate(getCurrentDateTime());
+    
         Set<Sales> salesSet = new HashSet<>();
         for (Long saleId : paymentDTO.salesIds()) {
             Sales sale = salesRepository.findById(saleId)
@@ -35,12 +35,18 @@ public class PaymentService {
             salesSet.add(sale);
         }
         payment.setSales(salesSet);
-
+    
         return paymentRepository.save(payment);
     }
 
      public List<Payment> getAllPayments() {
         return paymentRepository.findAll();
     }
+
+    private String getCurrentDateTime() {
+    LocalDateTime now = LocalDateTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    return now.format(formatter);
+}
     
 }
