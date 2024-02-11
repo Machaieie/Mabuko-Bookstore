@@ -29,18 +29,11 @@ public class Sales implements Serializable{
     private int amount;
     
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
-    private ZonedDateTime saleDate;
-    
-
   
-
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Client client;
+    private String saleDate;
 
     @ManyToMany(mappedBy = "sales")
-    private Set<Payment> Payment = new HashSet<>();
+    private Set<Payment> Payment;
 
     
 
@@ -52,14 +45,6 @@ public class Sales implements Serializable{
         Payment = payment;
     }
 
-    
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
 
     public long getId() {
         return id;
@@ -85,13 +70,16 @@ public class Sales implements Serializable{
         this.amount = amount;
     }
 
-    public ZonedDateTime getSaleDate() {
+    public String getSaleDate() {
         return saleDate;
     }
 
-    public void setSaleDate(ZonedDateTime saleDate) {
+    public void setSaleDate(String saleDate) {
         this.saleDate = saleDate;
     }
+
+    
+   
 
     
     
