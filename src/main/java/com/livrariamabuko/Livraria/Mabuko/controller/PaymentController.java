@@ -30,4 +30,10 @@ public class PaymentController {
         List<Payment> payments = paymentService.getAllPayments();
         return new ResponseEntity<>(payments, HttpStatus.OK);
     }
+
+    @GetMapping("/allAmount")
+    public ResponseEntity<Double> getAllPaymentsAmount() {
+        double totalAmount = paymentService.sumAllPaymentsAmounts();
+        return new ResponseEntity<>(totalAmount, HttpStatus.OK);
+    }
 }

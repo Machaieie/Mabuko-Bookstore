@@ -1,4 +1,5 @@
 package com.livrariamabuko.Livraria.Mabuko.service;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -27,7 +28,7 @@ public class PaymentService {
         payment.setType(paymentDTO.type());
         payment.setAmount(paymentDTO.amount());
         payment.setDate(getCurrentDateTime());
-    
+
         Set<Sales> salesSet = new HashSet<>();
         for (Long saleId : paymentDTO.salesIds()) {
             Sales sale = salesRepository.findById(saleId)
@@ -35,18 +36,28 @@ public class PaymentService {
             salesSet.add(sale);
         }
         payment.setSales(salesSet);
-    
+
         return paymentRepository.save(payment);
     }
 
-     public List<Payment> getAllPayments() {
+    public List<Payment> getAllPayments() {
         return paymentRepository.findAll();
     }
 
     private String getCurrentDateTime() {
-    LocalDateTime now = LocalDateTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-    return now.format(formatter);
-}
-    
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return now.format(formatter);
+    }
+
+    // Método para somar o amount de todos os pagamentos
+    public double sumAllPaymentsAmounts() {
+        List<Payment> payments = paymentRepository.findAll();
+        double totalAmount = 0.0;
+        for (Payment payment : payments) {
+            totalAmount += payment.getAmount();
+        }
+        return totalAmount;
+    }
+
 }
