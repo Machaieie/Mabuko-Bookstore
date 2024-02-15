@@ -16,11 +16,11 @@ import com.livrariamabuko.Livraria.Mabuko.service.StockService;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-
 public class StockController {
 
     @Autowired
@@ -57,20 +57,31 @@ public class StockController {
         return stockService.countBooksInStock();
     }
 
-    @PostMapping("/stock")
-    public ResponseEntity adicionarEstoque(@Valid @RequestBody StockDTO stockDTO) {
-        StockBook stockBook = new StockBook();
-        BeanUtils.copyProperties(stockDTO, stockBook);
+    @PostMapping("/addStock")
+public ResponseEntity adicionarEstoque(@Valid @RequestBody StockDTO stockDTO) {
+    // Encontra o estoque do livro pelo ID fornecido, se existir
+    Optional<StockBook> optionalStockBook = Optional.ofNullable(stockBookRepository.findByBookId(stockDTO.book_id()));
 
-        Book book = bookRepository.findById(stockDTO.idBook())
+
+    if (optionalStockBook.isPresent()) {
+        // Se o estoque do livro existir, atualize a quantidade em estoque
+        StockBook stockBook = optionalStockBook.get();
+        int novaQuantidade = stockBook.getAmount() + stockDTO.amount();
+        stockBook.setAmount(novaQuantidade);
+        stockBookRepository.save(stockBook);
+    } else {
+        // Se o estoque do livro não existir, crie um novo registro de estoque
+        StockBook novoStockBook = new StockBook();
+        Book book = bookRepository.findById(stockDTO.book_id())
                 .orElseThrow(() -> new ResourceNotFoundException("Livro não encontrado"));
-
-        stockBook.setBook(book);
-
-        StockBook estoqueSalvo = stockBookRepository.save(stockBook);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        novoStockBook.setBook(book);
+        novoStockBook.setAmount(stockDTO.amount());
+        stockBookRepository.save(novoStockBook);
     }
+
+    return ResponseEntity.status(HttpStatus.CREATED).build();
+}
+
 
     @PutMapping("/stock/{id}")
     public ResponseEntity<Object> atualizarEstoque(@PathVariable(value = "id") long id,
@@ -80,7 +91,7 @@ public class StockController {
                         "Informação de estoque com ID:: " + id + " não encontrada"));
         BeanUtils.copyProperties(stockDTO, estoqueEncontrado);
 
-        Book book = bookRepository.findById(stockDTO.idBook())
+        Book book = bookRepository.findById(stockDTO.book_id())
                 .orElseThrow(() -> new ResourceNotFoundException("Livro não encontrado"));
 
         estoqueEncontrado.setBook(book);

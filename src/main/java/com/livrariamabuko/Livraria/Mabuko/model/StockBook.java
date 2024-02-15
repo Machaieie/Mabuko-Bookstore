@@ -21,7 +21,7 @@ public class StockBook implements Serializable{
     @JoinColumn(name = "book_id")
     private Book book;
 
-    private double amount;
+    private int amount;
 
     public long getId() {
         return id;
@@ -39,11 +39,11 @@ public class StockBook implements Serializable{
         this.book = book;
     }
 
-    public double getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 

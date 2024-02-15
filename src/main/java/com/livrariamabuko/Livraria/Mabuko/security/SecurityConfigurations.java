@@ -40,6 +40,7 @@ class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "api/v1/promotion").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/v1/addSale").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/v1/payment").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/v1/addStock").permitAll()
                         
                         .anyRequest().permitAll()
                         )

@@ -1,7 +1,7 @@
 package com.livrariamabuko.Livraria.Mabuko.DTOs;
 
 public record StockDTO(
-    long idBook, 
+    long book_id, 
     int amount
 ) {
     
